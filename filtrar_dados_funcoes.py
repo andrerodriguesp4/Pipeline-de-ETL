@@ -6,6 +6,6 @@ def buscar_clientes_por_produto(produto):
     clientes_produto = teclado['Cliente'].tolist()
 
     if not clientes_produto:
-        print("Produto não encontrado")
+        return 'Produto não encontrado'
     else:
-        print(clientes_produto)
+        return clientes_produto
