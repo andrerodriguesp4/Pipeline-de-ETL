@@ -7,8 +7,20 @@
     <title>Processamento de Dados</title>
 </head>
 <body>
-    <input type="text" name="nome">
-    <button>Buscar Compras</button>
-    
+    <form action="/exec_compradores" method="post">
+        <input type="text" name="produto" placeholder="Digite o produto">
+        <button type="submit">Buscar Compradores</button>
+        <i>*Retorna quais clientes compraram determinado produto</i>
+    </form><br>
+    <form action="/exec_quantidade_produtos_vendidos" method="post">
+        <input type="text" name="produto_qtde" placeholder="Digite o produto">
+        <button type="submit">Buscar Quantidade de Prod. Vendidos</button>
+        <i>*Retorna a quantidade que foi vendida de determinado produto</i>
+    </form><br>
+    <form action="/exec_compras_por_cliente" method="post">
+        <input type="text" name="cliente_compras" placeholder="Digite o cliente">
+        <button type="submit">Buscar Compras</button>
+        <i>*Retorna as compras feitas por determinado cliente</i>
+    </form><br>
 </body>
 </html>

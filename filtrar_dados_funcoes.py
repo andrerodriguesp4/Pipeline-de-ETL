@@ -1,14 +1,13 @@
 import pandas as pd
 
-def buscar_clientes_por_produto(produto):
+def compradores(produto):
     try:
         #lê o banco de dados
         data = pd.read_csv('dados_vendas.csv')
 
         #checa se existe a coluna "Produto"
         if 'Produto' not in data.columns:
-            print('Erro: Coluna "Produto" não encontrada no CSV')
-            return None
+            return 'Erro: Coluna "Produto" não encontrada no CSV'
 
         #seleciona as linhas que tem o produto escolhido
         linhas_prod = data[data['Produto'] == produto]
@@ -20,11 +19,10 @@ def buscar_clientes_por_produto(produto):
         if not clientes_produto:
             return 'Produto não encontrado'
         else:
-            return list(set(clientes_produto))
+            return '<br>'.join(list(set(clientes_produto)))
 
     except Exception as ex:
-        print(f'Erro: {ex}')
-        return None
+        return f'Erro: {ex}'
 
 def contar_qtde_produtos_vendidos(produto):
     #lê o banco de dados
@@ -33,8 +31,7 @@ def contar_qtde_produtos_vendidos(produto):
         
         #checa se existe a coluna "Produto"
         if 'Produto' not in data.columns:
-            print('Erro: Coluna "Produto" não encontrada no CSV')
-            return None
+            return 'Erro: Coluna "Produto" não encontrada no CSV'
 
         #seleciona as linhas que tem o produto escolhido
         linhas_prod = data[data['Produto'] == produto]
@@ -42,12 +39,13 @@ def contar_qtde_produtos_vendidos(produto):
         #soma a quantidade do produto que foi vendido
         soma = linhas_prod['Quantidade'].sum()
 
+        resultado = str(soma)
+
         #retorna a quantidade de produtos vendidos
-        return soma
+        return resultado
 
     except Exception as ex:
-        print(f'Erro: {ex}')
-        return None
+        return f'Erro: {ex}'
 
 def listar_produtos():
     try:
@@ -56,8 +54,7 @@ def listar_produtos():
 
         #checa se a coluna "Produto" existe
         if 'Produto' not in data.columns:
-            print('Erro: Coluna "Produto" não encontrada no CSV')
-            return None
+            return 'Erro: Coluna "Produto" não encontrada no CSV'
 
         #seleciona somente a coluna "Produto" e a transforma em uma lista
         produtos = data['Produto'].tolist()
@@ -68,13 +65,15 @@ def listar_produtos():
         return lista_produtos
 
     except Exception as ex:
-        print(f'Erro: {ex}')
-        return None
+        return f'Erro: {ex}'
 
 def filtrar_compras_por_cliente(cliente):
     try:
         #lê o banco de dados
         data = pd.read_csv('dados_vendas.csv')
+
+        if 'Cliente' not in data.columns:
+            return 'Erro: Coluna "Região" não encontrada no CSV'
 
         #seleciona as linhas que tem o nome do cliente
         lista_compras =  data[data['Cliente'] == cliente]
@@ -86,8 +85,7 @@ def filtrar_compras_por_cliente(cliente):
             return lista_compras[['Cliente', 'Produto', 'Quantidade']]
 
     except Exception as ex:
-        print(f'Erro: {ex}')
-        return None
+        return f'Erro: {ex}'
     
 def filtrar_clientes_por_regiao(regiao):
     try:
@@ -95,8 +93,7 @@ def filtrar_clientes_por_regiao(regiao):
         data = pd.read_csv('dados_vendas.csv')
 
         if 'Região' not in data.columns:
-            print('Erro: Coluna "Região" não encontrada no CSV')
-            return None
+            return 'Erro: Coluna "Região" não encontrada no CSV'
 
         #seleciona as linhas que tem clientes da região solicitada
         linhas_regiao = data[data['Região'] == regiao]
@@ -112,5 +109,4 @@ def filtrar_clientes_por_regiao(regiao):
         return resultado
 
     except Exception as ex:
-        print(f'Erro: {ex}')
-        return None
+        return f'Erro: {ex}'
