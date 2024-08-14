@@ -114,7 +114,3 @@ def filtrar_clientes_por_regiao(regiao):
     except Exception as ex:
         print(f'Erro: {ex}')
         return None
-
-
-resultado = filtrar_clientes_por_regiao('Nordeste')
-print(resultado)
