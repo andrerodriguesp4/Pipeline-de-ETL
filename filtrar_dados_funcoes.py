@@ -1,11 +1,120 @@
 import pandas as pd
 
 def buscar_clientes_por_produto(produto):
-    data = pd.read_csv('dados_vendas.csv')
-    teclado = data[data['Produto'] == produto]
-    clientes_produto = teclado['Cliente'].tolist()
+    try:
+        #lê o banco de dados
+        data = pd.read_csv('dados_vendas.csv')
 
-    if not clientes_produto:
-        return 'Produto não encontrado'
-    else:
-        return clientes_produto
+        #checa se existe a coluna "Produto"
+        if 'Produto' not in data.columns:
+            print('Erro: Coluna "Produto" não encontrada no CSV')
+            return None
+
+        #seleciona as linhas que tem o produto escolhido
+        linhas_prod = data[data['Produto'] == produto]
+        
+        #filtra as colunas e deixa somente a coluna clientes e as transforma em uma lista
+        clientes_produto = linhas_prod['Cliente'].tolist()
+
+        #checa se a lista não está vazia
+        if not clientes_produto:
+            return 'Produto não encontrado'
+        else:
+            return list(set(clientes_produto))
+
+    except Exception as ex:
+        print(f'Erro: {ex}')
+        return None
+
+def contar_qtde_produtos_vendidos(produto):
+    #lê o banco de dados
+    try:
+        data = pd.read_csv('dados_vendas.csv')
+        
+        #checa se existe a coluna "Produto"
+        if 'Produto' not in data.columns:
+            print('Erro: Coluna "Produto" não encontrada no CSV')
+            return None
+
+        #seleciona as linhas que tem o produto escolhido
+        linhas_prod = data[data['Produto'] == produto]
+
+        #soma a quantidade do produto que foi vendido
+        soma = linhas_prod['Quantidade'].sum()
+
+        #retorna a quantidade de produtos vendidos
+        return soma
+
+    except Exception as ex:
+        print(f'Erro: {ex}')
+        return None
+
+def listar_produtos():
+    try:
+        #lê o banco de dados
+        data = pd.read_csv('dados_vendas.csv')
+
+        #checa se a coluna "Produto" existe
+        if 'Produto' not in data.columns:
+            print('Erro: Coluna "Produto" não encontrada no CSV')
+            return None
+
+        #seleciona somente a coluna "Produto" e a transforma em uma lista
+        produtos = data['Produto'].tolist()
+
+        #obtém os produtos únicos
+        lista_produtos = list(set(data['Produto'].tolist()))
+        
+        return lista_produtos
+
+    except Exception as ex:
+        print(f'Erro: {ex}')
+        return None
+
+def filtrar_compras_por_cliente(cliente):
+    try:
+        #lê o banco de dados
+        data = pd.read_csv('dados_vendas.csv')
+
+        #seleciona as linhas que tem o nome do cliente
+        lista_compras =  data[data['Cliente'] == cliente]
+
+        #checa se o cliente existe no banco de dados
+        if lista_compras.empty:
+            return 'Cliente não realizou compras'
+        else:
+            return lista_compras[['Cliente', 'Produto', 'Quantidade']]
+
+    except Exception as ex:
+        print(f'Erro: {ex}')
+        return None
+    
+def filtrar_clientes_por_regiao(regiao):
+    try:
+        #lê o banco de dados
+        data = pd.read_csv('dados_vendas.csv')
+
+        if 'Região' not in data.columns:
+            print('Erro: Coluna "Região" não encontrada no CSV')
+            return None
+
+        #seleciona as linhas que tem clientes da região solicitada
+        linhas_regiao = data[data['Região'] == regiao]
+
+        #verifica se a lista está vazia
+        if linhas_regiao.empty:
+            return 'Nenhuma compra foi realizada na região e/ou região inexistente'
+
+        #seleciona o cliente, produto e quantidade
+        resultado = linhas_regiao[['Cliente', 'Produto', 'Quantidade', 'Região']]
+
+        #retorna o resultado
+        return resultado
+
+    except Exception as ex:
+        print(f'Erro: {ex}')
+        return None
+
+
+resultado = filtrar_clientes_por_regiao('Nordeste')
+print(resultado)
