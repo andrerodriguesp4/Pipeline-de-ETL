@@ -110,3 +110,21 @@ def filtrar_clientes_por_regiao(regiao):
 
     except Exception as ex:
         return f'Erro: {ex}'
+
+def listar_clientes():
+    try:
+        #lê o banco de dados
+        data = pd.read_csv('dados_vendas.csv')
+        #verifica se a coluna "Clientes" existe
+        if 'Cliente' not in data.columns:
+            return 'Erro: Coluna "Cliente" não encontrada no CSV'
+        #selecionar a coluna clientes
+        clientes = data['Cliente']
+        #converter para lista
+        lista_clientes = set(clientes.tolist())
+        #converter em DataFrame
+        df = pd.DataFrame(lista_clientes, columns=['Cliente'])
+        return df
+    except Exception as ex:
+        return f'Erro: {ex}'
+

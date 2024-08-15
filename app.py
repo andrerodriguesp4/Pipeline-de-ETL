@@ -14,6 +14,9 @@ def exec_compradores():
         produto = request.form['produto']
         resultado = filtrar_dados_funcoes.compradores(produto)
 
+        if isinstance(resultado, str):
+            return resultado
+
         #converter para dataframe
         df = pd.DataFrame(resultado, columns=['Clientes'])
 
@@ -76,6 +79,17 @@ def exec_listar_produtos():
         return result
     except Exception as ex:
         return f'Erro: {ex}'
+
+@app.route('/exec_listar_clientes', methods=['POST'])
+def exec_listar_clientes():
+    try:
+        resultado = filtrar_dados_funcoes.listar_clientes()
+        #converter dataframe para html
+        result = resultado.to_html()
+        return result
+    except Exception as ex:
+        return f'Erro: {ex}'
+
 
 if __name__ == '__main__':
     app.run(debug=True)
