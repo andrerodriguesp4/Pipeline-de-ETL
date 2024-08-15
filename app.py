@@ -1,11 +1,12 @@
 import filtrar_dados_funcoes
 from flask import Flask, render_template, request
 import pandas as pd
+import os
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
+@app.route('/', methods=['GET', 'POST'])
+def index():
     return render_template('index.html')
 
 @app.route('/exec_compradores', methods=['POST'])
