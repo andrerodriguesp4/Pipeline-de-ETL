@@ -15,17 +15,17 @@ def exec_compradores():
         resultado = filtrar_dados_funcoes.compradores(produto)
 
         if isinstance(resultado, str):
-            return resultado
+            result = resultado
+        else:
+            #converter para dataframe
+            df = pd.DataFrame(resultado, columns=['Clientes'])
+            #converter para html
+            result = df.to_html()
 
-        #converter para dataframe
-        df = pd.DataFrame(resultado, columns=['Clientes'])
-
-        #converter para html
-        result = df.to_html()
-
-        return result
+        return render_template('result.html', result=result)
     except Exception as ex:
-        return f'Erro: {ex}'
+        result = f'Erro: {ex}'
+        return render_template('result.html', result=result)
 
 @app.route('/exec_quantidade_produtos_vendidos', methods=['POST'])
 def exec_quantidade():
@@ -33,9 +33,10 @@ def exec_quantidade():
         produto = request.form['produto_qtde']
         resultado = filtrar_dados_funcoes.contar_qtde_produtos_vendidos(produto)
         if(resultado == '0'):
-            return 'O produto não consta no banco de dados'
+            result = 'O produto não consta no banco de dados'
         else:
-            return f'A quantidade de "{produto}" vendidos foi {resultado}'
+            result = f'A quantidade de "{produto}" vendidos foi {resultado}'
+        return render_template('result.html', result=result)
     except Exception as ex:
         return f'Erro: {ex}'
 
@@ -46,11 +47,12 @@ def exec_compras_por_cliente():
         resultado = filtrar_dados_funcoes.filtrar_compras_por_cliente(cliente_compras)
         try:
             result = resultado.to_html()
-            return result
         except:
-            return resultado
+            result = resultado
+        return render_template('result.html', result=result)
     except Exception as ex:
-        return f'Erro: {ex}'
+        result = f'Erro: {ex}'
+        return render_template('result.html', result=result)
 
 @app.route('/exec_clientes_por_regiao', methods=['POST'])
 def exec_clientes_por_regiao():
@@ -59,26 +61,29 @@ def exec_clientes_por_regiao():
         resultado = filtrar_dados_funcoes.filtrar_clientes_por_regiao(regiao_cliente)
 
         if isinstance(resultado, str):
-            return resultado
+            return render_template('result.html', result=resultado)
 
         result = resultado.to_html()
-        return result
+        return render_template('result.html', result=result)
     except Exception as ex:
-        return f'Erro: {ex}'
+        result = f'Erro: {ex}'
+        return render_template('result.html', result=result)
 
 @app.route('/exec_listar_produtos', methods=['POST'])
 def exec_listar_produtos():
     try:
         resultado = filtrar_dados_funcoes.listar_produtos()
+
         #converter para dataframe
         df = pd.DataFrame(resultado, columns=['Produtos'])
 
         #convertendo para html
         result = df.to_html()
 
-        return result
+        return render_template('result.html', result=result)
     except Exception as ex:
-        return f'Erro: {ex}'
+        result = f'Erro: {ex}'
+        return render_template('result.html', result=result)
 
 @app.route('/exec_listar_clientes', methods=['POST'])
 def exec_listar_clientes():
@@ -86,9 +91,11 @@ def exec_listar_clientes():
         resultado = filtrar_dados_funcoes.listar_clientes()
         #converter dataframe para html
         result = resultado.to_html()
-        return result
+        return render_template('result.html', result=result)
     except Exception as ex:
-        return f'Erro: {ex}'
+        result = f'Erro: {ex}'
+        return render_template('result.html', result=result)
+
 
 
 if __name__ == '__main__':
