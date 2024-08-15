@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Processamento de Dados</title>
     <script>
-        // Função para limpar os campos
+        // função para limpar os campos
         function limparCampos() {
             document.getElementById('compradores').value = '';
             document.getElementById('quantidade').value = '';
             document.getElementById('compras').value = '';
+            document.getElementById('regiao').value = '';
         }
 
-        // Limpar os campos ao voltar para a página
+        // limpa os campos ao voltar para a página
         window.addEventListener('pageshow', function(event) {
             if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
                 limparCampos();
@@ -22,20 +23,34 @@
     </script>
 </head>
 <body>
+    <!--Formulário de compradores-->
     <form action="/exec_compradores" method="post">
         <input type="text" name="produto" id="compradores" placeholder="Digite o produto">
         <button type="submit">Buscar Compradores</button>
         <i>*Retorna quais clientes compraram determinado produto</i>
     </form><br>
+    <!--Formulário de quantidade de produtos vendidos-->
     <form action="/exec_quantidade_produtos_vendidos" method="post">
         <input type="text" name="produto_qtde" id="quantidade" placeholder="Digite o produto">
         <button type="submit">Buscar Quantidade de Prod. Vendidos</button>
         <i>*Retorna a quantidade que foi vendida de determinado produto</i>
     </form><br>
+    <!--Formulário de compras realizadas por um determinado cliente-->
     <form action="/exec_compras_por_cliente" method="post">
         <input type="text" name="cliente_compras" id="compras" placeholder="Digite o cliente">
         <button type="submit">Buscar Compras</button>
         <i>*Retorna as compras feitas por determinado cliente</i>
     </form><br>
+    <!--Fomulário de clintes localizados em uma determinada região-->
+    <form action="/exec_clientes_por_regiao" method="post">
+        <input type="text" name="regiao" id="regiao" placeholder="Digite a região">
+        <button type="submit">Buscar Clientes</button>
+        <i>*Retorna clientes localizados em uma determinada região</i>
+    </form><br>
+    <!--Lista os todos os produtos-->
+    <form action="/exec_listar_produtos" method="post">
+        <button type="submit">Listar Produtos</button>
+        <i>*Lista todos os produtos do banco de dados</i>
+    </form>
 </body>
 </html>

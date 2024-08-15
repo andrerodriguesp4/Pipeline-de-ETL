@@ -19,7 +19,7 @@ def compradores(produto):
         if not clientes_produto:
             return 'Produto não encontrado'
         else:
-            return '<br>'.join(list(set(clientes_produto)))
+            return list(set(clientes_produto))
 
     except Exception as ex:
         return f'Erro: {ex}'

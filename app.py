@@ -1,7 +1,6 @@
 import filtrar_dados_funcoes
 from flask import Flask, render_template, request
 import pandas as pd
-import os
 
 app = Flask(__name__)
 
@@ -14,7 +13,14 @@ def exec_compradores():
     try:
         produto = request.form['produto']
         resultado = filtrar_dados_funcoes.compradores(produto)
-        return resultado
+
+        #converter para dataframe
+        df = pd.DataFrame(resultado, columns=['Clientes'])
+
+        #converter para html
+        result = df.to_html()
+
+        return result
     except Exception as ex:
         return f'Erro: {ex}'
 
@@ -43,6 +49,33 @@ def exec_compras_por_cliente():
     except Exception as ex:
         return f'Erro: {ex}'
 
+@app.route('/exec_clientes_por_regiao', methods=['POST'])
+def exec_clientes_por_regiao():
+    try:
+        regiao_cliente = request.form['regiao']
+        resultado = filtrar_dados_funcoes.filtrar_clientes_por_regiao(regiao_cliente)
+
+        if isinstance(resultado, str):
+            return resultado
+
+        result = resultado.to_html()
+        return result
+    except Exception as ex:
+        return f'Erro: {ex}'
+
+@app.route('/exec_listar_produtos', methods=['POST'])
+def exec_listar_produtos():
+    try:
+        resultado = filtrar_dados_funcoes.listar_produtos()
+        #converter para dataframe
+        df = pd.DataFrame(resultado, columns=['Produtos'])
+
+        #convertendo para html
+        result = df.to_html()
+
+        return result
+    except Exception as ex:
+        return f'Erro: {ex}'
 
 if __name__ == '__main__':
     app.run(debug=True)
