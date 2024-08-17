@@ -13,13 +13,13 @@ def compradores(produto):
         linhas_prod = data[data['Produto'] == produto]
         
         #filtra as colunas e deixa somente a coluna clientes e as transforma em uma lista
-        clientes_produto = linhas_prod['Cliente'].tolist()
+        clientes_produto = linhas_prod[['Cliente', 'Quantidade']].to_html(index=False)
 
         #checa se a lista não está vazia
-        if not clientes_produto:
+        if(linhas_prod[['Cliente', 'Quantidade']].shape[0] == 0):
             return 'Produto não encontrado'
         else:
-            return list(set(clientes_produto))
+            return clientes_produto
 
     except Exception as ex:
         return f'Erro: {ex}'
