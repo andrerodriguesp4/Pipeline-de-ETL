@@ -63,7 +63,7 @@ def exec_clientes_por_regiao():
         if isinstance(resultado, str):
             return render_template('result.html', result=resultado)
 
-        result = resultado.to_html()
+        result = resultado.to_html(index=False)
         return render_template('result.html', result=result)
     except Exception as ex:
         result = f'Erro: {ex}'
